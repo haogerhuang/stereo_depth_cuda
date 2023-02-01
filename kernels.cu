@@ -75,14 +75,14 @@ __global__ void compute_disparity(float *img1, float *img2, int *disparity, int 
     int disp = 0;
     float min_ssd = 1e7;
     
-    for(int i = max_disp; i >= 0 && x - i >= 0; i--){
+    for(int i = max_disp; i >= 0 && x + i < w; i--){
       float ssd = 0.0;
       float cnt = 0.0;
      
       for(int j = -(kernel_size/2); j < kernel_size/2+1; j++){
         for(int k = -(kernel_size/2); k < kernel_size/2+1; k++){
           int xx1 = x + j;
-          int xx2 = x - i + j;
+          int xx2 = x + i + j;
           int yy = y + k;
           if (xx1 < w && xx1 >= 0 && xx2 < w && xx2 >= 0 && yy < h && yy >= 0){
             cnt++;
